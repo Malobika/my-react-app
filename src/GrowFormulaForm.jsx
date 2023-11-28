@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import './ViewForm.css'; // Make sure to import your CSS file
-
+function creategfg() {
+  fetch('http://localhost:8000/gfg', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({names}),
+  })
+    .then(response => {
+      return response.text();
+    })
+    .then(data => {
+      alert(data);
+      getNodes();
+    });
+}
 const GrowFormulaForm = () => {
   const [growFormulaGroupName, setGrowFormulaGroupName] = useState('');
   const [comment, setComment] = useState('');
@@ -37,15 +52,7 @@ const GrowFormulaForm = () => {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="cycleDefinitionNotes">Cycle Definition Notes</label>
-            <input
-              type="text"
-              id="cycleDefinitionNotes"
-              value={cycleDefinitionNotes}
-              onChange={(e) => setCycleDefinitionNotes(e.target.value)}
-            />
-          </div>
+        
           <button type="submit">Submit</button>
         </form>
       </div>

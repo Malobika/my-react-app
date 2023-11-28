@@ -35,6 +35,7 @@ function App() {
         getNodes();
       });
   }
+  
 
   function deleteNodes() {
     let id = prompt('Enter node id');
