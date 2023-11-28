@@ -2,11 +2,18 @@ import React from 'react';
 import './ViewForm.css';
 
 import DropdownComponent from './Dropdowncomponent';
-
+function getAllNames(data) {
+  if (!Array.isArray(data)) {
+    return []; // Return an empty array if data is not an array
+  }
+  
+  const namesArray = data.map(item => item.names);
+  return namesArray;
+}
 function getNodesbyId(selectedUUID) {
   return fetch(`http://localhost:8000/nodes/${selectedUUID}`)
     .then(response => {
-      return response.text();
+      return response.json();
     })
    
 }
@@ -16,7 +23,8 @@ class ViewForm extends React.Component {
     super(props);
     this.state = {
       selectedUUID: '',
-      nodesData: null, // State to hold the fetched data // State to hold the selected UUID
+      nodesData: null,
+      namenodes:[], // State to hold the fetched data // State to hold the selected UUID
     };}
     
   
@@ -30,10 +38,14 @@ class ViewForm extends React.Component {
     getNodesbyId(this.state.selectedUUID)
       .then(data => {
         this.setState({ nodesData: data });
+        this.setState({ namenodes: getAllNames(data) });
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
+      
+      console.log('Selected names:', this.state.namenodes);
+      
   };
   
 
@@ -60,32 +72,26 @@ class ViewForm extends React.Component {
 
             <button type="submit">Submit</button>
             <div className="node-data">
-              {this.state.nodesData}
+             
+              <div>
+      {this.state.nodesData ? (
+        <div>
+          <h2>Children are: {this.state.namenodes.join(', ')}</h2>
+         
+        </div>
+      ) : (
+        <p>Loading data...</p>
+      )}
+    </div>
+             
+            
+             
+            
               </div>
           </form>
         </div>
 
-        <div className="form-section">
-          <h2>Add Relationship</h2>
-          <form>
-            <div className="form-group">
-              <label htmlFor="entityId">Entity ID *</label>
-              <input type="text" id="entityId" name="entityId" required />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="child">Child *</label>
-              <input type="text" id="child" name="child" required />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="parent">Parent *</label>
-              <input type="text" id="parent" name="parent" required />
-            </div>
-
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        
       </div>
     );
   }

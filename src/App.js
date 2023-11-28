@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import ViewForm from './ViewForm';
 import {useState, useEffect} from 'react';
+import GrowFormulaForm from './GrowFormulaForm';
 function App() {
   const [nodes, setNodes] = useState(false);
 
@@ -78,6 +79,7 @@ function App() {
     <div>
   
       <ViewForm />
+      <GrowFormulaForm/>
     </div>
   );
 }
