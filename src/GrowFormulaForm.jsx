@@ -58,8 +58,10 @@ function GrowFormulaGroupForm() {
       />
 
      </div>
-     
-      <button type="submit">Submit</button> <button type="button" onClick={goToNextPage}>Next</button>
+     <div className='button-container'>
+     <button type="submit">Submit</button> <button type="button" onClick={goToNextPage}>Next</button>
+     </div>
+      
     </form>
     
     </div>
