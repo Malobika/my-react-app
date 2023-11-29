@@ -73,26 +73,16 @@ class ViewForm extends React.Component {
             <button type="submit">Submit</button>
             <div className="node-data">
              
-              <div>
-      {this.state.nodesData ? (
-        <div>
+            <div>{this.state.nodesData ? (<div>
           <h2>Children are: {this.state.namenodes.join(', ')}</h2>
-         
-        </div>
-      ) : (
-        <p>Loading data...</p>
-      )}
+         </div>) : (<p>Loading data...</p>)}
     </div>
-             
-            
-             
-            
-              </div>
-          </form>
-        </div>
+    </div>
+    </form>
+    </div>
 
         
-      </div>
+    </div>
     );
   }
 }

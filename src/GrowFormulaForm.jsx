@@ -1,63 +1,71 @@
 import React, { useState } from 'react';
-import './ViewForm.css'; // Make sure to import your CSS file
-function creategfg() {
-  fetch('http://localhost:8000/gfg', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({names}),
-  })
-    .then(response => {
-      return response.text();
-    })
-    .then(data => {
-      alert(data);
-      getNodes();
-    });
-}
-const GrowFormulaForm = () => {
-  const [growFormulaGroupName, setGrowFormulaGroupName] = useState('');
-  const [comment, setComment] = useState('');
-  const [cycleDefinitionNotes, setCycleDefinitionNotes] = useState('');
+import './GrowFormulaForm.css'; // Make sure to import your CSS file
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Process the data here, or call an API with the form data
-    console.log({ growFormulaGroupName, comment, cycleDefinitionNotes });
+import { useNavigate } from 'react-router-dom';
+
+function GrowFormulaGroupForm() {
+  const [formData, setFormData] = useState({ grow_formula_group_name: '', comment: '' });
+  const navigate = useNavigate();
+
+  const goToNextPage = () => {
+    navigate('/view-form'); // Navigate to the path of the next page
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/insert-grow-formula-group', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Data successfully inserted into the "grow_formula_group" table
+        console.log('Data inserted successfully');
+      } else {
+        // Handle errors
+        console.error('Failed to insert data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <div className="form-container">
-      <div className="form-section">
-        <h2>Grow Formula Group</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="growFormulaGroupName">Grow Formula Group Name *</label>
-            <input
-              type="text"
-              id="growFormulaGroupName"
-              value={growFormulaGroupName}
-              onChange={(e) => setGrowFormulaGroupName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="comment">Comment *</label>
-            <input
-              type="text"
-              id="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              required
-            />
-          </div>
-        
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  );
-};
+      <form onSubmit={handleSubmit}>
+      <div>
+      <h2>Grow Formula Group Name</h2>
+      <input
+        type="text"
+        placeholder="Grow Formula Group Name"
+        value={formData.grow_formula_group_name}
+        onChange={(e) => setFormData({ ...formData, grow_formula_group_name: e.target.value })}
+      />
 
-export default GrowFormulaForm;
+      </div>
+     <div>
+     <h2>Comment</h2>
+      <input
+        type="text"
+        placeholder="Comment"
+        value={formData.comment}
+        onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+      />
+
+     </div>
+     
+      <button type="submit">Submit</button> <button type="button" onClick={goToNextPage}>Next</button>
+    </form>
+    
+    </div>
+    
+    
+  );
+}
+
+export default GrowFormulaGroupForm;
