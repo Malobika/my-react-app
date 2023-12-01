@@ -15,7 +15,7 @@ function GrowFormulaGroupForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/insert-grow-formula-group', {
+      const response = await fetch('http://localhost:8000/gfg', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
