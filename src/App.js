@@ -4,6 +4,7 @@ import ViewForm from './ViewForm';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import GrowFormulaForm from './GrowFormulaForm';
+import SeedDataForm from './SeedData';
 function App() {
   const [nodes, setNodes] = useState(false);
 
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/grow-formula-form" element={<GrowFormulaForm />} />
         <Route path="/view-form" element={<ViewForm />} />
+        <Route path="/Seed-data" element={<SeedDataForm />} />
       </Routes>
     </Router>
       
